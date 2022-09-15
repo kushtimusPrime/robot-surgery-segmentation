@@ -8,9 +8,9 @@ from tqdm import tqdm
 import cv2
 import numpy as np
 
-data_path = Path('data')
+data_path = Path('../Dataset')
 
-train_path = data_path / 'train'
+train_path = data_path / 'instrument_1_4_training'
 
 cropped_train_path = data_path / 'cropped_train'
 

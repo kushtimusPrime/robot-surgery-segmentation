@@ -50,7 +50,7 @@ def main():
     arg('--val_crop_height', type=int, default=1024)
     arg('--val_crop_width', type=int, default=1280)
     arg('--type', type=str, default='binary', choices=['binary', 'parts', 'instruments'])
-    arg('--model', type=str, default='UNet', choices=moddel_list.keys())
+    arg('--model', type=str, default='UNet11', choices=moddel_list.keys())
 
     args = parser.parse_args()
 
