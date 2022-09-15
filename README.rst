@@ -125,37 +125,34 @@ Dependencies
 
 To install all these dependencies you can run
 ::
-    pip install -r requirements.txt
-
-
-
-How to run
-----------
-
-The dataset is organized in the folloing way:
-
-::
-
-    ├── data
-    │   ├── cropped_train
-    │   ├── models
-    │   ├── test
-    │   │   ├── instrument_dataset_1
-    │   │   │   ├── left_frames
-    │   │   │   └── right_frames
-    |   |   ....................... 
-    │   └── train
-    │       ├── instrument_dataset_1
-    │       │   ├── ground_truth
-    │       │   │   ├── Left_Prograsp_Forceps_labels
-    │       │   │   ├── Maryland_Bipolar_Forceps_labels
-    │       │   │   ├── Other_labels
-    │       │   │   └── Right_Prograsp_Forceps_labels
-    │       │   ├── left_frames
-    │       │   └── right_frames
-    │       .......................
-
-The training dataset contains only 8 videos with 255 frames each. Inside each video all frames are correlated, so, for 4-fold cross validation of our experiments, we split data using this dependance i.e utilize whole video for the validation. In such a case, we try to make every fold to contain more or less equal number of instruments. The test dataset consists of 8x75-frame sequences containing footage sampled immediately after each training sequence and 2 full 300-frame sequences, sampled at the same rate as the training set. Under the terms of the challenge, participants should exclude the corresponding training set when evaluating on one of the 75-frame sequences. 
+    wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_9.2.148-1_amd64.deb
+    sudo dpkg -i cuda-repo-ubuntu1604_9.2.148-1_amd64.deb
+    sudo apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/7fa2af80.pub
+    sudo apt-get update
+    sudo apt-get install cuda
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+    sh Miniconda3-latest-Linux-x86_64.sh
+    source .bashrc
+    conda create --name unet python=3.6
+    conda activate unet
+    conda install pytorch=0.4.1 cuda92 -c pytorch
+    conda install torchvision=0.2
+    pip install opencv-python==3.3.0.10 tqdm==4.19.4 albumentations==0.0.4
+    # Installing the Dataset Folders (For me, it was too hard to put the whole zip file, so you had to zip up the training and testing separately, but the folder structure still the same)
+    mkdir Dataset
+    cd Dataset
+    mkdir instrument_1_4_training
+    mkdir instrument_1_4_testing
+    cd instrument_1_4_training
+    gdown --folder --remaining-ok https://drive.google.com/drive/folders/1X677jGkLBPO72zChLFEiYITUvJ42uOiF?usp=sharing
+    cd ../instrument_1_4_testing
+    gdown --folder --remaining-ok https://drive.google.com/drive/folders/1uZ2OKVRRCUyM0npfkcs31id2nxkxwcd-?usp=sharing
+    # Unfortunately, GDown is limited to 50 items per folder, so everything was split up into folders in the dataset, so you have to manually pull everything out by going into thefolder and then doing mv * ../
+    cd ~/
+    git clone https://github.com/kushtimusPrime/robot-surgery-segmentation/
+    python3 prepare_data.py
+    python3 prepare_train_val.py
+    screen -m bash -c "./train.bash"
 
 1. Preprocessing
 ~~~~~~~~~~~~~~~~~~~~~~
