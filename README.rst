@@ -144,6 +144,7 @@ To install all these dependencies you can run
     mkdir instrument_1_4_training
     mkdir instrument_1_4_testing
     cd instrument_1_4_training
+    pip3 install gdown
     gdown --folder --remaining-ok https://drive.google.com/drive/folders/1X677jGkLBPO72zChLFEiYITUvJ42uOiF?usp=sharing
     cd ../instrument_1_4_testing
     gdown --folder --remaining-ok https://drive.google.com/drive/folders/1uZ2OKVRRCUyM0npfkcs31id2nxkxwcd-?usp=sharing
