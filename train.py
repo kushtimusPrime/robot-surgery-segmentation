@@ -1,7 +1,7 @@
 import argparse
 import json
 from pathlib import Path
-from validation import validation_binary, validation_multi
+from validation import validation_binary
 
 import torch
 from torch import nn
@@ -10,8 +10,8 @@ from torch.utils.data import DataLoader
 import torch.backends.cudnn as cudnn
 import torch.backends.cudnn
 
-from models import UNet11, LinkNet34, UNet, UNet16, AlbuNet
-from loss import LossBinary, LossMulti
+from models import UNet11
+from loss import LossBinary
 from dataset import RoboticsDataset
 import utils
 import sys
@@ -27,11 +27,7 @@ from albumentations import (
     CenterCrop
 )
 
-moddel_list = {'UNet11': UNet11,
-               'UNet16': UNet16,
-               'UNet': UNet,
-               'AlbuNet': AlbuNet,
-               'LinkNet34': LinkNet34}
+moddel_list = {'UNet11': UNet11,}
 
 
 def main():
@@ -69,18 +65,14 @@ def main():
               'are not.'.format(val_crop_height=args.val_crop_height, val_crop_width=args.val_crop_width))
         sys.exit(0)
 
-    if args.type == 'parts':
-        num_classes = 4
-    elif args.type == 'instruments':
-        num_classes = 8
-    else:
+    if args.type == 'binary':
         num_classes = 1
-
-    if args.model == 'UNet':
-        model = UNet(num_classes=num_classes)
     else:
-        model_name = moddel_list[args.model]
-        model = model_name(num_classes=num_classes, pretrained=True)
+        print("Num classes is wrong")
+    if args.model == 'UNet11':
+        model = UNet11(num_classes=num_classes,pretrained=True)
+    else:
+        print("Model type is wrong")
 
     if torch.cuda.is_available():
         if args.device_ids:
@@ -94,11 +86,12 @@ def main():
     if args.type == 'binary':
         loss = LossBinary(jaccard_weight=args.jaccard_weight)
     else:
-        loss = LossMulti(num_classes=num_classes, jaccard_weight=args.jaccard_weight)
+        print("Loss type is wrong")
 
     cudnn.benchmark = True
 
     def make_loader(file_names, shuffle=False, transform=None, problem_type='binary', batch_size=1):
+        print("Problem type: ",problem_type)
         return DataLoader(
             dataset=RoboticsDataset(file_names, transform=transform, problem_type=problem_type),
             shuffle=shuffle,
@@ -138,7 +131,7 @@ def main():
     if args.type == 'binary':
         valid = validation_binary
     else:
-        valid = validation_multi
+        print("Wrong validation")
 
     utils.train(
         init_optimizer=lambda lr: Adam(model.parameters(), lr=lr),

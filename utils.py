@@ -93,7 +93,7 @@ def train(args, model, criterion, train_loader, valid_loader, validation, init_o
             write_event(log, step, loss=mean_loss)
             tq.close()
             save(epoch + 1)
-            valid_metrics = validation(model, criterion, valid_loader, num_classes)
+            valid_metrics = validation(model, criterion, valid_loader)
             write_event(log, step, **valid_metrics)
             valid_loss = valid_metrics['valid_loss']
             valid_losses.append(valid_loss)
