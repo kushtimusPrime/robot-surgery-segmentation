@@ -139,8 +139,9 @@ To install all these dependencies you can run
     conda install torchvision=0.2
     pip3 install opencv-python==3.3.0.10 tqdm==4.19.4 albumentations==0.0.4
     # Installing the Dataset Folders
-    pip3 install unzip
-    wget <Web Link to zip file, threw it Firebase Storage>
+    sudo apt-get install zip unzip
+    pip3 install gdown
+    gdown <ID OF ZIP FILE IN GOOGLE DRIVE> -O <Dataset.zip>
     unzip <Path to zip file>
     cd ~/
     git clone https://github.com/kushtimusPrime/robot-surgery-segmentation/
