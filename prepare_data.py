@@ -77,12 +77,25 @@ if __name__ == '__main__':
                     mask_parts[mask == 10] = 1  # Shaft
                     mask_parts[mask == 20] = 2  # Wrist
                     mask_parts[mask == 30] = 3  # Claspers
-
-            mask_binary = (mask_binary[h_start: h_start + height, w_start: w_start + width] > 0).astype(
+                    
+            binary_label_right = np.zeros((old_h, old_w))
+            parts_label_right = np.zeros((old_h, old_w))
+            instruments_label_right = np.zeros((old_h, old_w))
+            for i in range(old_h-1):
+              for j in range(old_w-1):
+                x_right_i = round(i + shift_i)
+                x_right_j = round(j + shift_j)
+                if x_right_i >= 0 and x_right_i < old_h:
+                  if x_right_j >= 0 and x_right_j < old_w:
+                    binary_label_right[x_right_i, x_right_j] = mask_binary[i, j];
+                    parts_label_right[x_right_i, x_right_j] = mask_parts[i, j];
+                    instruments_label_right[x_right_i, x_right_j] = mask_instruments[i, j];
+                    
+            mask_binary = (binary_label_right[h_start: h_start + height, w_start: w_start + width] > 0).astype(
                 np.uint8) * binary_factor
-            mask_parts = (mask_parts[h_start: h_start + height, w_start: w_start + width]).astype(
+            mask_parts = (parts_label_right[h_start: h_start + height, w_start: w_start + width]).astype(
                 np.uint8) * parts_factor
-            mask_instruments = (mask_instruments[h_start: h_start + height, w_start: w_start + width]).astype(
+            mask_instruments = (instruments_label_right[h_start: h_start + height, w_start: w_start + width]).astype(
                 np.uint8) * instrument_factor
 
             cv2.imwrite(str(binary_mask_folder / file_name.name), mask_binary)
