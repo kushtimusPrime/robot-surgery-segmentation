@@ -138,6 +138,7 @@ To install all these dependencies you can run
     conda install pytorch=0.4.1 cuda92 -c pytorch
     conda install torchvision=0.2
     pip3 install opencv-python==3.3.0.10 tqdm==4.19.4 albumentations==0.0.4
+    sudo apt-get install libsm6 libxrender1 libfontconfig1
     # Installing the Dataset Folders
     sudo apt-get install zip unzip
     pip3 install gdown
