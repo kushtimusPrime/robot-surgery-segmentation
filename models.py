@@ -100,6 +100,7 @@ class UNet11(nn.Module):
         self.dec1 = ConvRelu(64 + num_filters, num_filters)
 
         self.final = nn.Conv2d(num_filters, num_classes, kernel_size=1)
+        self.transformer = nn.Transformer(nhead=16, num_encoder_layers=12)
 
     def forward(self, x):
         conv1 = self.conv1(x)
@@ -119,7 +120,9 @@ class UNet11(nn.Module):
             x_out = F.log_softmax(self.final(dec1), dim=1)
         else:
             x_out = self.final(dec1)
-
+        # TODO Idk what the src or target are supposed to be, will do more research soon
+        # https://towardsdatascience.com/illustrated-guide-to-transformers-step-by-step-explanation-f74876522bc0
+        x_out = self.transformer(x_out,dec1)
         return x_out
 
 # Not using alternate UNet, LinkNet, AlbuNet, etc so it is commented out
