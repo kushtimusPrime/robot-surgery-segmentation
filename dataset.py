@@ -7,7 +7,7 @@ from albumentations.torch.functional import img_to_tensor
 
 
 class RoboticsDataset(Dataset):
-    def __init__(self, file_names, to_augment=False, mode='train'):
+    def __init__(self, file_names):
         self.file_names = file_names
         self.to_augment = to_augment
         self.mode = mode
@@ -20,10 +20,7 @@ class RoboticsDataset(Dataset):
         image = load_image(img_file_name)
         mask = load_mask(img_file_name)
 
-        if self.mode == 'train':
-            return img_to_tensor(image), torch.from_numpy(np.expand_dims(mask, 0)).float()
-        else:
-            return img_to_tensor(image), str(img_file_name)
+        return img_to_tensor(image), torch.from_numpy(np.expand_dims(mask, 0)).float()
 
 
 def load_image(path):
