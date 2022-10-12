@@ -42,16 +42,7 @@ def get_model(model_path, model_type='UNet11', problem_type='binary'):
     elif problem_type == 'instruments':
         num_classes = 8
 
-    if model_type == 'UNet16':
-        model = UNet16(num_classes=num_classes)
-    elif model_type == 'UNet11':
-        model = UNet11(num_classes=num_classes)
-    elif model_type == 'LinkNet34':
-        model = LinkNet34(num_classes=num_classes)
-    elif model_type == 'AlbuNet':
-        model = AlbuNet(num_classes=num_classes)
-    elif model_type == 'UNet':
-        model = UNet(num_classes=num_classes)
+    model = UNet(num_classes=num_classes)
 
     state = torch.load(str(model_path))
     state = {key.replace('module.', ''): value for key, value in state['model'].items()}

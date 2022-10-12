@@ -10,7 +10,6 @@ do
         --lr 0.0001 \
         --n-epochs 10 \
         --jaccard-weight 0.3 \
-        --model UNet \
         --train_crop_height 1024 \
         --train_crop_width 1280 \
         --val_crop_height 1024 \
@@ -23,7 +22,6 @@ do
         --lr 0.00001 \
         --n-epochs 20 \
         --jaccard-weight 0.3 \
-        --model UNet \
         --train_crop_height 1024 \
         --train_crop_width 1280 \
         --val_crop_height 1024 \
