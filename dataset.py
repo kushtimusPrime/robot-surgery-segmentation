@@ -3,14 +3,12 @@ import numpy as np
 import cv2
 from torch.utils.data import Dataset
 import prepare_data
-from albumentations.torch.functional import img_to_tensor
+from albumentations.pytorch.functional import img_to_tensor
 
 
 class RoboticsDataset(Dataset):
     def __init__(self, file_names):
         self.file_names = file_names
-        self.to_augment = to_augment
-        self.mode = mode
 
     def __len__(self):
         return len(self.file_names)

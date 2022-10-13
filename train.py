@@ -1,7 +1,7 @@
 import argparse
 import json
 from pathlib import Path
-from validation import validation_binary, validation_multi
+from validation import validation_binary
 
 import torch
 from torch import nn
@@ -10,8 +10,8 @@ from torch.utils.data import DataLoader
 import torch.backends.cudnn as cudnn
 import torch.backends.cudnn
 
-from models import UNet11, LinkNet34, UNet, UNet16, AlbuNet
-from loss import LossBinary, LossMulti
+from models import UNet
+from loss import LossBinary
 from dataset import RoboticsDataset
 import utils
 import sys
