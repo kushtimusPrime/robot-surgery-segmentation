@@ -25,7 +25,7 @@ h_start, w_start = 28, 320
 
 binary_factor = 255
 
-num_augmentation_per_image = 10
+num_augmentation_per_image = 6
 
 def make_directories():
     for instrument_number in range(1, 5):
@@ -35,16 +35,14 @@ def make_directories():
     
 def make_transform():
     return A.Compose([
-        A.RandomRotate90(),
-        A.Flip(),
-        A.Transpose(),
+        A.Flip()
         A.GaussNoise(p=0.5),
         A.OneOf([
             A.MotionBlur(p=.2),
             A.MedianBlur(blur_limit=3, p=0.1),
             A.Blur(blur_limit=3, p=0.1),
         ], p=0.5),
-        A.ShiftScaleRotate(shift_limit=0.0625, scale_limit=0.2, rotate_limit=45, p=0.2),
+        A.ShiftScaleRotate(shift_limit=0.0625, scale_limit=0.5, rotate_limit=90, p=0.5),
         A.OneOf([
             A.OpticalDistortion(p=0.3),
             A.GridDistortion(p=.1),
