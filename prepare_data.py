@@ -35,26 +35,26 @@ def make_directories():
     
 def make_transform():
     return A.Compose([
-        A.Flip()
+        A.Flip(),
         A.GaussNoise(p=0.5),
         A.OneOf([
             A.MotionBlur(p=.2),
             A.MedianBlur(blur_limit=3, p=0.1),
             A.Blur(blur_limit=3, p=0.1),
         ], p=0.5),
-        A.ShiftScaleRotate(shift_limit=0.0625, scale_limit=0.5, rotate_limit=90, p=0.5),
+        A.ShiftScaleRotate(shift_limit=0.5, scale_limit=0.6, rotate_limit=180, p=0.5),
         A.OneOf([
-            A.OpticalDistortion(p=0.3),
-            A.GridDistortion(p=.1),
-            A.PiecewiseAffine(p=0.3),
+            A.OpticalDistortion(p=0.4),
+            A.GridDistortion(p=.2),
+            A.PiecewiseAffine(p=0.4),
         ], p=0.5),
         A.OneOf([
             A.CLAHE(clip_limit=2),
             A.Sharpen(),
             A.Emboss(),
-            A.RandomBrightnessContrast(),            
+            A.RandomBrightnessContrast(),
         ], p=0.5),
-        A.HueSaturationValue(p=0.5),
+        A.HueSaturationValue(p=0.75),
     ])
 
 if __name__ == '__main__':
