@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader
 import torch.backends.cudnn as cudnn
 import torch.backends.cudnn
 
-from models import UNet
+from models import ResUnet as UNet
 from loss import LossBinary
 from dataset import RoboticsDataset
 import utils
