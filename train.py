@@ -52,8 +52,8 @@ def main():
 
     num_classes = 1
 
-    model = UNet(num_classes=num_classes)
-    
+    model = UNet()
+    print('Num learnable model params', sum(p.numel() for p in model.parameters() if p.requires_grad))
     if torch.cuda.is_available():
         if args.device_ids:
             device_ids = list(map(int, args.device_ids.split(',')))

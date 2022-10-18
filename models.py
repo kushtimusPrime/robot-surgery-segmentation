@@ -274,7 +274,7 @@ class AttentionBlock(nn.Module):
         return out * x2
 
 class ResUnet(nn.Module):
-    def __init__(self, channel=3, filters=[64, 128, 256, 512]):
+    def __init__(self, channel=3, filters=[50, 100, 200, 400]):
         super(ResUnet, self).__init__()
 
         self.input_layer = nn.Sequential(
@@ -314,18 +314,15 @@ class ResUnet(nn.Module):
         # Bridge
         x4 = self.bridge(x3)
         # Decode
-        x4 = self.upsample_1(x4)
-        x5 = torch.cat([x4, x3], dim=1)
+        x5 = torch.cat([self.upsample_1(x4), x3], dim=1)
 
         x6 = self.up_residual_conv1(x5)
 
-        x6 = self.upsample_2(x6)
-        x7 = torch.cat([x6, x2], dim=1)
+        x7 = torch.cat([self.upsample_2(x6), x2], dim=1)
 
         x8 = self.up_residual_conv2(x7)
 
-        x8 = self.upsample_3(x8)
-        x9 = torch.cat([x8, x1], dim=1)
+        x9 = torch.cat([self.upsample_3(x8), x1], dim=1)
 
         x10 = self.up_residual_conv3(x9)
 
