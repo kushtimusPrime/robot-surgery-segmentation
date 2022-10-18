@@ -274,7 +274,7 @@ class AttentionBlock(nn.Module):
         return out * x2
 
 class ResUnet(nn.Module):
-    def __init__(self, channel=3, filters=[64, 128, 256, 512]):
+    def __init__(self, channel=3, filters=[32, 64, 128, 256]):
         super(ResUnet, self).__init__()
 
         self.input_layer = nn.Sequential(
